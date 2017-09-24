@@ -6,8 +6,8 @@ response = requests.get('https://docs.google.com/spreadsheet/ccc?key=1SAT8AgSThk
 #  Настоящая таблица
 # response = requests.get('https://docs.google.com/spreadsheet/ccc?key=16U6dbrd4zGhiQW-c3SR4OE2ueUNX4ts8MYjWiT7YqLw&output=csv', verify=False)
 assert response.status_code == 200, 'Wrong status code'
-file = open('new_data.csv', 'w')
-file.write(response.content.decode("utf-8"))
+with open('new_data.csv', 'w', newline='') as file:
+    file.write(response.content.decode("utf-8"))
 
 week_day = ''
 
