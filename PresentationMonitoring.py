@@ -29,14 +29,14 @@ def check():
     if number_of_presentations == settings['number_of_downloaded_presentations']:
         print('Новых презентаций нет =)')
     else:
-        last_li = list_of_li[-1]
-        for nobr in last_li.find_all('nobr'):
-            path = os.path.join(settings['files_path'], nobr.a.string)
-            response = session.get(base_url + nobr.a.get('href'))
-            with open(path, 'bw') as outfile:
-                outfile.write(response.content)
+        for li in list_of_li[settings['number_of_downloaded_presentations']:]:
+            for nobr in li.find_all('nobr'):
+                path = os.path.join(settings['files_path'], nobr.a.string)
+                response = session.get(base_url + nobr.a.get('href'))
+                with open(path, 'bw') as outfile:
+                    outfile.write(response.content)
+            print('Успешно скачаны новые презентации')
         settings['number_of_downloaded_presentations'] = number_of_presentations
-        print('Успешно скачаны новые презентации')
 
     with open('settings.json', 'w') as settings_file:
         json.dump(settings, settings_file)
